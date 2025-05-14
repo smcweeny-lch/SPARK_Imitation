@@ -1,0 +1,11 @@
+/code/deprecated/
+/code/Empirical_priors/deprecated/
+/code/Empirical_priors/M_and_E/output/
+/code/Empirical_priors/O_and_R/output/
+/code/Empirical_priors/R_and_P/output/
+/code/CFAs/deprecated/
+/code/Results_Analyses/deprecated/
+/code/construct_voting/old/
+/data/
+.Rdata
+.Rhistory
