@@ -261,7 +261,7 @@ data %>% ungroup %>% filter(subject_sp_id %in% imputed_IDS) %>%
             q6 = mean(q06_invented_words,na.rm=T),
             q7 = mean(q07_same_over,na.rm=T))
 
-round((plotpercents %>% filter(age == 85))$value, 3)
+# round((plotpercents %>% filter(age == 85))$value, 3)
 # matches pretty well
 
 #binarize the following columns to deal with the 888 problem. adjust age in months to normal age of occurrence
@@ -327,4 +327,4 @@ reverse_score_corrected_data <- scaled_data %>%
 
 
 saveRDS(reverse_score_corrected_data, "./data/reverse_score_corrected_data_2_26_25.rds")
-
+saveRDS(scaled_data$V1, "./data/all_ids.rds")

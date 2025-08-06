@@ -57,7 +57,7 @@ symbolism22.cfa <- lavaan::cfa(symbolism_syntax22, data = train, meanstructure =
 # )
 
 #nulls <- readRDS("./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_3_27_25.rds")
-nulls <- readRDS("./code/Empirical_priors/R_and_P/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
 summary_table <- nulls %>% group_by(combo) %>%
   filter(Fs == 11) %>%
   summarize(median_beta = median(correlation_value),
@@ -343,7 +343,7 @@ graph_data$edges$label[4] <- as.character(round(parametertable(RP.mod)$est[11], 
 graph_data$edges$label <- ifelse(graph_data$edges$label %in% c("0.1", "-0.1"), paste0(graph_data$edges$label, "0"), graph_data$edges$label)
 
 # graph_data$edges$label[1:4] <- paste0(graph_data$edges$label[1:4], c("***", "", "", "***"))
-graph_data$edges$label[1:4] <- paste0(graph_data$edges$label[1:4], c("", "*", "*", "*"))
+graph_data$edges$label[1:4] <- paste0(graph_data$edges$label[1:4], c("†", "", "", ""))
 
 
 graph_data$nodes$size <- 2.5

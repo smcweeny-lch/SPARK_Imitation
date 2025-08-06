@@ -1,10 +1,10 @@
 rm(list = ls())
 library(tidyverse)
 #nulls <- readRDS("./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_3_27_25.rds")
-nulls <- readRDS("./code/Empirical_priors/R_and_P/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
 
-nulls <- readRDS("./code/Empirical_priors/R_and_P/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
-nulls <- readRDS("./code/Empirical_priors/R_and_P/R_and_P_pseudo_construct_reliability_constraints_4_28_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliability_constraints_4_28_25.rds")
 
 #nulls <- readRDS("./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_4_10_25.rds")
 
@@ -20,6 +20,14 @@ real_b_imi_aff <- .433 # Imi -> Affect.Sharing
 real_b_imi_sym <- .397 # Imi -> Symbolism
 real_b_aff_soc <- .467 # Aff -> Social.Eng
 real_b_imi_soc <- .306 # Imi -> Social.Eng
+
+# data2_female
+# real_b_imi_aff <- .438 # Imi -> Affect.Sharing
+# real_b_imi_sym <- .397 # Imi -> Symbolism
+# real_b_aff_soc <- 0.434   # Aff -> Social.Eng
+# real_b_imi_soc <- .312 # Imi -> Social.Eng
+
+
 
 
 mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "11"))$correlation_value > real_b_imi_aff)
@@ -147,9 +155,9 @@ dev.off()
 
 
 # nulls <- readRDS("./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_3_24_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/O_and_R_pseudo_construct_no_constraints_4_28_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_no_constraints_4_28_25.rds")
 
 summary_table <- nulls %>% group_by(combo) %>%
   filter(Fs == 11) %>%
@@ -167,9 +175,29 @@ b_imi_RC <- .413
 b_imi_VL <- .037 
 b_self_RC <- .389
 b_self_VL <- .333
-b_VL_perc <- .153
 b_RC_perc <- .132
+b_VL_perc <- .153
 
+
+# data2_younger
+# b_self_perc <- .23
+# b_imi_perc <- .17
+# b_imi_RC <- .37
+# b_imi_VL <- .10
+# b_self_RC <- .39
+# b_self_VL <- .26
+# b_RC_perc <- .17
+# b_VL_perc <- .14
+
+# data2_younger
+# b_self_perc <- .37
+# b_imi_perc <- .09
+# b_imi_RC <- .38
+# b_imi_VL <- .10
+# b_self_RC <- .42
+# b_self_VL <- .33
+# b_RC_perc <- .12
+# b_VL_perc <- .11
 
 
 
@@ -355,12 +383,12 @@ dev.off()
 
 
 #nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudo_construct_all_constraints_3_27_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/M_and_E_pseudo_construct_reliability_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_reliability_constraints_4_21_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
 #nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_4_7_25.rds")
 
-nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
+nulls <- readRDS("./code/Empirical_priors/output/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
 
 
 summary_table <- nulls %>% group_by(combo) %>%
@@ -375,6 +403,13 @@ b_imi_motor <- .264
 b_imi_social <- .533
 phi_mot_soc <- .213
 r_mot_soc <- .354
+
+
+b_imi_motor <- 0.282 
+b_imi_social <- 0.525 
+phi_mot_soc <- 0.217 
+r_mot_soc <- .35
+
 
 
 mean((nulls %>% filter(combo == "Motor.Skills*Imitation"))$correlation_value > b_imi_motor)

@@ -9,7 +9,7 @@ data2 <- read_rds("data/factor_score_estimates_constructs_symbolism_2_10_25.rds"
 
 
 
-nulls <- readRDS("./code/Empirical_priors/M_and_E/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
 # nulls <- readRDS("./code/Empirical_priors/M_and_E/M_and_E_pseudo_construct_reliability_constraints_4_21_25.rds")
 
 
@@ -145,7 +145,7 @@ graph_data$edges <- graph_data$edges %>%
   filter(from != to)
 
 graph_data$edges$label <- as.character(round(parametertable(ME.mod)$est[7:9], 2))
-graph_data$edges$label <- paste0(graph_data$edges$label, c("**", "**", "†"))
+graph_data$edges$label <- paste0(graph_data$edges$label, c("*", "*", ""))
 
 # raw_corr_row <- c(from = "Motor.Skills", to = "Social.Skills", arrow = "none", label = "0.12***", connect_from = "bottom", connect_to = "top", curvature = 10,
 #                           linetype = 1, lhs = "Motor.Skills", op = "~~", rhs = "Social.Skills", est = .12, se = .01, pval = 0.00, 
@@ -162,7 +162,7 @@ graph_data$edges$connect_to[4] <- "right"
 graph_data$edges$curvature[4] <- 10
 graph_data$edges$linetype[4] <- 1
 # .35 (real) - .23 (pseudo)
-graph_data$edges$label[4] <- "0.12**"
+graph_data$edges$label[4] <- "0.12*"
 
 
 graph_data$edges$size <- 1.5

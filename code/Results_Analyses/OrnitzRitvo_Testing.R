@@ -14,7 +14,7 @@ test <- data2[-split,]
 
 
 #nulls <- readRDS("./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_3_24_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
 
 
 summary_table <- nulls %>% group_by(combo) %>%
@@ -282,8 +282,9 @@ graph_data$edges$curvature[graph_data$edges$from == "Perceptual.Inconstancy" & g
 
 graph_data$edges$label[1:8]  <- format(round(parametertable(OR.mod)[c(15:17, 19, 21, 18, 20, 22),]$est, 2), nsmall = 2)
 graph_data$edges$show[9] <- FALSE
-graph_data$edges$label[7] <- paste0(graph_data$edges$label[7], "**")
-graph_data$edges$label[3] <- paste0(graph_data$edges$label[3], "**")
+graph_data$edges$label[7] <- paste0(graph_data$edges$label[7], "*")
+graph_data$edges$label[3] <- paste0(graph_data$edges$label[3], "*")
+graph_data$edges$label[c(1,2,4,5,6,8)] <- paste0(graph_data$edges$label[c(1,2,4,5,6,8)], "†") 
 
 
 graph_data$edges$connect_to[4] <- "left"

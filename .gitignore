@@ -1,11 +1,12 @@
 /code/deprecated/
 /code/Empirical_priors/deprecated/
-/code/Empirical_priors/M_and_E/output/
-/code/Empirical_priors/O_and_R/output/
-/code/Empirical_priors/R_and_P/output/
+/code/Empirical_priors/M_and_E/output/old/
+/code/Empirical_priors/O_and_R/output/old/
+/code/Empirical_priors/R_and_P/output/old/
 /code/CFAs/deprecated/
 /code/Results_Analyses/deprecated/
 /code/construct_voting/old/
+/code/Utilities/twin_count.R
 /data/
 .Rdata
 .Rhistory

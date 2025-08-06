@@ -31,16 +31,16 @@ train <- data[split,]
 test <- data[c(-split, -split2),]
 data_full <- rbind(train, test)
 
- 
-items_sources <- readxl::read_xlsx("./construct_voting/Item_Voting_SM.xlsx") %>%
+
+items_sources <- readxl::read_xlsx("./code/construct_voting/old/Item_Voting_SM.xlsx") %>%
   select(-Imitation:-`O&R Sum`)
 items_sources$dichotomous <- items_sources$from %in% c("background_history-child, background_history",
-                                       "background_history-child, background_history-sibling",
-                                       "background_history-child, background_history-adult",
-                                       "basic_medical_screening",
-                                       "core_descriptive_variables, background_history-child, background_history-sibling",
-                                       "scq",
-                                       "other","NA")
+                                                       "background_history-child, background_history-sibling",
+                                                       "background_history-child, background_history-adult",
+                                                       "basic_medical_screening",
+                                                       "core_descriptive_variables, background_history-child, background_history-sibling",
+                                                       "scq",
+                                                       "other","NA")
 
 
 
@@ -844,12 +844,13 @@ data$Imag.Play <- apply(data %>% select(q35_make_believe, q39_imaginative_games)
 data$Self.Nonself <- apply(data %>% select(q05_pronouns_mixed, q10_hand_tool, q27_smile_back), MARGIN = 1, FUN = mean)
 data$Imitation <- apply(data %>% select(q21_copy_you, q34_copy_actions), MARGIN = 1, FUN = mean)
 
-data <- data %>% rename(Motor.Skills = `F`)
+# data <- data %>% rename(Motor.Skills = `F`)
 
 data2 <- data %>% select(Perceptual.Inconstancy:Social.Eng)
+data2 <- data %>% select(VL1.F1:Imitation)
 names(data2)
 
-write_rds(data2, "./data/factor_score_estimates_constructs_1_30_25.rds")
+#write_rds(data2, "./data/factor_score_estimates_constructs_1_30_25.rds")
 
 ###
 
@@ -858,4 +859,5 @@ symbolism.cfa <- lavaan::cfa(symbolism_syntax, data = data2, meanstructure = T, 
 data2$Symbolism <- lavPredict(symbolism.cfa)
 
 data2 <- data2 %>% mutate(across(everything(), ~ scale(.x)))
-saveRDS(data2, "data/factor_score_estimates_constructs_symbolism_2_10_25.rds")
+#saveRDS(data2, "data/factor_score_estimates_constructs_symbolism_2_10_25.rds")
+#saveRDS(data2, "data/factor_score_estimates_constructs_symbolism_7_30_25_replication.rds")
