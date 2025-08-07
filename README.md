@@ -20,6 +20,8 @@ Additionally, ```items_list_constructs.rds``` is created here, and used througho
 A short note: the factor score estimate date is before the reverse scored data (2_26_25), the reverse scored data are identical to the data used here, with everything flipped in sign. 
 We were able to replicate the factor_score_estimates in ```./data/factor_score_estimates_constructs_symbolism_7_30_25_replication.rds```. 
 
+The items for each construct/CFA are stored in ```./misc/items_list_constructs.rds```
+
 
 ## Structural Model Evaluations
 
