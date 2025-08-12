@@ -30,11 +30,14 @@ The lavaan versions of the models, as well as the SEM Plots are from:
 ```./code/Results_Analyses/RogersPennington_Testing.R```
 ```./code/Results_Analyses/OrnitzRitvo_Testing.R```
 
+and are stored in ```./code/Results_Analyses/lavaan_models/```
+
 ## Null Distributions
 
 To compare to a null distribution, Monte Carlo simulations were run from random related items (using the same test), excluding the real items.
 
-The most up-to-date sampling function is ```sim_betas_lavaan()``` 
+The most up-to-date sampling function is ```sim_betas_lavaan_std_all()``` 
+Note: ```sim_betas_lavaan()``` was deprecated on Aug-11-2025 for using $est rather than $std.all
 
 Because this is a novel procedure, sensitivity analyses were run, completing multiple simulations, varying a few parameters. The parameters were:
 

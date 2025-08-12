@@ -9,7 +9,8 @@ rm(list = ls())
 library(tidyverse)
 library(psych)
 
-source("./code/Empirical_priors/sim_betas_lavaan.R")
+# source("./code/Empirical_priors/sim_betas_lavaan.R") deprecated for M+E on 8/11/25 after discovering std.all is different from std.lv for residual
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 items_list[["Symbolism"]] <- c(items_list[["VL1.F1"]], items_list[["NVC.F1"]], items_list[["Imag.Play"]])
@@ -118,7 +119,8 @@ for(i in 1:niter){
                        Motor.Skills = pseudo_MotorSkills,
                        Social.Skills = pseudo_SocialSkills)
   
-  betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "M&E")
+  #betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "M&E")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "M&E")
   print(i)
 }
 
@@ -201,9 +203,15 @@ t(construct_items_list[["Social.Skills"]][3,])
 
 length(betas_list)
 
-saveRDS(nulls, "./code/Empirical_priors/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E_pseudo_construct_items_no_constraints_4_18_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/M_and_E_pseudo_construct_reliabilities_no_constraints_4_18_25.rds")
+# saveRDS(nulls, "./code/Empirical_priors/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E_pseudo_construct_items_no_constraints_4_18_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/M_and_E_pseudo_construct_reliabilities_no_constraints_4_18_25.rds")
+
+
+saveRDS(nulls, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_no_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_items_no_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_reliabilities_no_constraints_8_11_25.rds")
+
 
 
 nulls2 <- readRDS("./code/Empirical_priors/M_and_E_pseudo_construct_no_constraints_3_27_25.rds")

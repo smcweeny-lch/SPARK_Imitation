@@ -3,7 +3,9 @@ rm(list = ls())
 library(tidyverse)
 library(psych)
 
-source("./code/Empirical_priors/sim_betas_lavaan.R")
+# source("./code/Empirical_priors/sim_betas_lavaan.R")
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
+
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 items_list[["Symbolism.11"]] <- c(items_list[["VL1.F1"]], items_list[["NVC.F1"]], items_list[["Imag.Play"]])
@@ -259,7 +261,9 @@ for(i in 1:niter){
                        Affect.Sharing = pseudo_Affect.Sharing,
                        Social.Eng = pseudo_Social.Eng)
   
-  betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "R&P")
+  # betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "R&P")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "R&P")
+  
   print(i)
   toc1 <- Sys.time()
   print(toc1 - tic1)
@@ -278,7 +282,6 @@ colMeans(relis_df)
 class(relis_df)
 
 
-nulls[1:7,]
 
 nulls <- do.call(rbind, betas_list)
 
@@ -347,10 +350,13 @@ construct_items_list[["Affect.Sharing"]][2,] %in% construct_items_list[["Social.
 # saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_all_constraints_3_27_25.rds")
 # saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_all_constraints_3_27_25.rds")
 
-saveRDS(nulls, "./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_all_constraints_4_22_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_all_constraints_4_22_25.rds")
+# saveRDS(nulls, "./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_all_constraints_4_22_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_all_constraints_4_22_25.rds")
 
+saveRDS(nulls, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_items_all_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliabilities_all_constraints_8_11_25.rds")
 
 
 nulls %>% group_by(combo) %>%

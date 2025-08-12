@@ -15,6 +15,7 @@ library(tidyverse)
 library(psych)
 
 source("./code/Empirical_priors/sim_betas_lavaan.R")
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 items_list[["Symbolism"]] <- c(items_list[["VL1.F1"]], items_list[["NVC.F1"]], items_list[["Imag.Play"]])
@@ -345,7 +346,9 @@ for(i in 1:niter){
                        RC.F2 = pseudo_RC.F2,
                        VL2.F2 = pseudo_VL2.F2)
   
-  betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "O&R")
+  # betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "O&R")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "O&R")
+  
   print(i)
   toc1 <- Sys.time()
   print(toc1-tic1)
@@ -425,10 +428,13 @@ construct_items_list[["Self.Nonself"]][1,] %in% construct_items_list[["RC.F1"]][
 
 
 
-saveRDS(nulls, "./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R_pseudo_construct_items_all_constraints_4_21_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/O_and_R_pseudo_construct_reliabilities_all_constraints_4_21_25.rds")
+# saveRDS(nulls, "./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R_pseudo_construct_items_all_constraints_4_21_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/O_and_R_pseudo_construct_reliabilities_all_constraints_4_21_25.rds")
 
+saveRDS(nulls, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_items_all_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliabilities_all_constraints_8_11_25.rds")
 
 nulls2 <- readRDS("./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_4_10_25.rds")
 

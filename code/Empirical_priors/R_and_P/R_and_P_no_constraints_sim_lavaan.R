@@ -3,7 +3,9 @@ rm(list = ls())
 library(tidyverse)
 library(psych)
 
-source("./code/Empirical_priors/sim_betas_lavaan.R")
+# source("./code/Empirical_priors/sim_betas_lavaan.R")
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
+
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 items_list[["Symbolism.11"]] <- c(items_list[["VL1.F1"]], items_list[["NVC.F1"]], items_list[["Imag.Play"]])
@@ -101,10 +103,10 @@ for(i in 1:niter){
   
   len <- length(items_list[[construct]])
   
-
-    Imi.col_idx <- sample(available_Imitation, size = len)
-    temp <- psych::alpha(data[,Imi.col_idx])
-    alpha_val <- temp$total$raw_alpha
+  
+  Imi.col_idx <- sample(available_Imitation, size = len)
+  temp <- psych::alpha(data[,Imi.col_idx])
+  alpha_val <- temp$total$raw_alpha
   
   
   pseudo_Imitation <- rowMeans(data[,Imi.col_idx])
@@ -118,10 +120,10 @@ for(i in 1:niter){
   # available_Affect.Sharing <- item_list_voted[[construct]][item_list_voted[[construct]] %in% c(available$scq)]
   len <- length(items_list[[construct]])
   
-
-    affect.sharing.col_idx <- sample(available_Affect.Sharing, size = len)
-    temp <- psych::alpha(data[,affect.sharing.col_idx])
-    alpha_val <- temp$total$raw_alpha
+  
+  affect.sharing.col_idx <- sample(available_Affect.Sharing, size = len)
+  temp <- psych::alpha(data[,affect.sharing.col_idx])
+  alpha_val <- temp$total$raw_alpha
   
   
   pseudo_Affect.Sharing <- rowMeans(data[,affect.sharing.col_idx])
@@ -133,11 +135,11 @@ for(i in 1:niter){
   # available_Social.Eng <- item_list_voted[[construct]][item_list_voted[[construct]] %in% c(available$scq)]
   len <- length(items_list[[construct]])
   
-    
-    
-    social.eng.col_idx <- sample(available_Social.Eng, size = len)
-    temp <- psych::alpha(data[,social.eng.col_idx])
-    alpha_val <- temp$total$raw_alpha
+  
+  
+  social.eng.col_idx <- sample(available_Social.Eng, size = len)
+  temp <- psych::alpha(data[,social.eng.col_idx])
+  alpha_val <- temp$total$raw_alpha
   
   
   pseudo_Social.Eng <- rowMeans(data[,social.eng.col_idx])
@@ -150,13 +152,13 @@ for(i in 1:niter){
   # available_Symbolism <- item_list_voted[[construct]][item_list_voted[[construct]] %in% c(available$scq, available$other)]
   len <- length(items_list[[paste0(construct, ".11")]])
   
-
-    symbolism.11.col_idx <- sample(available_Symbolism, size = len)
-    
-    temp <- psych::alpha(data[,symbolism.11.col_idx])
-    
-    alpha_val <- temp$total$raw_alpha
-    
+  
+  symbolism.11.col_idx <- sample(available_Symbolism, size = len)
+  
+  temp <- psych::alpha(data[,symbolism.11.col_idx])
+  
+  alpha_val <- temp$total$raw_alpha
+  
   
   pseudo_Symbolism.11 <- rowMeans(data[,symbolism.11.col_idx])
   relis_list[[i]][[paste0(construct, "11")]] <- alpha_val
@@ -164,15 +166,15 @@ for(i in 1:niter){
   
   len <- length(items_list[[paste0(construct, ".12")]])
   
-
-    
-    symbolism.12.col_idx <- sample(available_Symbolism, size = len)
-    
-    temp <- psych::alpha(data[,symbolism.12.col_idx])
-    
-    alpha_val <- temp$total$raw_alpha
-    
-    
+  
+  
+  symbolism.12.col_idx <- sample(available_Symbolism, size = len)
+  
+  temp <- psych::alpha(data[,symbolism.12.col_idx])
+  
+  alpha_val <- temp$total$raw_alpha
+  
+  
   pseudo_Symbolism.12 <- rowMeans(data[,symbolism.12.col_idx])
   relis_list[[i]][[paste0(construct, "12")]] <- alpha_val  
   
@@ -180,53 +182,55 @@ for(i in 1:niter){
   
   len <- length(items_list[[paste0(construct, ".21")]])
   
-    
-    symbolism.21.col_idx <- sample(available_Symbolism, size = len)
-    
-    temp <- psych::alpha(data[,symbolism.21.col_idx])
-    alpha_val <- temp$total$raw_alpha
-    
-    
-    pseudo_Symbolism.21 <- rowMeans(data[,symbolism.21.col_idx])
-    relis_list[[i]][[paste0(construct, "21")]] <- alpha_val
-    
-    
-    len <- length(items_list[[paste0(construct, ".22")]])
-    
-    
-    symbolism.22.col_idx <- sample(available_Symbolism, size = len)
-    
-    temp <- psych::alpha(data[,symbolism.22.col_idx])
-    alpha_val <- temp$total$raw_alpha
-    
-    pseudo_Symbolism.22 <- rowMeans(data[,symbolism.22.col_idx])
-    relis_list[[i]][[paste0(construct, "22")]] <- alpha_val
-    
-    
-    
-    
-    
-    
-    pseudo_items_list[[i]] <- list(Imitation = names(data[,Imi.col_idx]),
-                                   Symbolism.11 = names(data[,symbolism.11.col_idx]),
-                                   Symbolism.12 = names(data[,symbolism.12.col_idx]),
-                                   Symbolism.21 = names(data[,symbolism.21.col_idx]),
-                                   Symbolism.22 = names(data[,symbolism.22.col_idx]),
-                                   Affect.Sharing = names(data[,affect.sharing.col_idx]),
-                                   Social.Eng = names(data[,social.eng.col_idx]))
-    
-    pseudo <- data.frame(Imitation = pseudo_Imitation,
-                         Symbolism.11 = pseudo_Symbolism.11,
-                         Symbolism.12 = pseudo_Symbolism.12,
-                         Symbolism.21 = pseudo_Symbolism.21,
-                         Symbolism.22 = pseudo_Symbolism.22,
-                         Affect.Sharing = pseudo_Affect.Sharing,
-                         Social.Eng = pseudo_Social.Eng)
-    
-    betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "R&P")
-    print(i)
-    toc1 <- Sys.time()
-    print(toc1 - tic1)
+  
+  symbolism.21.col_idx <- sample(available_Symbolism, size = len)
+  
+  temp <- psych::alpha(data[,symbolism.21.col_idx])
+  alpha_val <- temp$total$raw_alpha
+  
+  
+  pseudo_Symbolism.21 <- rowMeans(data[,symbolism.21.col_idx])
+  relis_list[[i]][[paste0(construct, "21")]] <- alpha_val
+  
+  
+  len <- length(items_list[[paste0(construct, ".22")]])
+  
+  
+  symbolism.22.col_idx <- sample(available_Symbolism, size = len)
+  
+  temp <- psych::alpha(data[,symbolism.22.col_idx])
+  alpha_val <- temp$total$raw_alpha
+  
+  pseudo_Symbolism.22 <- rowMeans(data[,symbolism.22.col_idx])
+  relis_list[[i]][[paste0(construct, "22")]] <- alpha_val
+  
+  
+  
+  
+  
+  
+  pseudo_items_list[[i]] <- list(Imitation = names(data[,Imi.col_idx]),
+                                 Symbolism.11 = names(data[,symbolism.11.col_idx]),
+                                 Symbolism.12 = names(data[,symbolism.12.col_idx]),
+                                 Symbolism.21 = names(data[,symbolism.21.col_idx]),
+                                 Symbolism.22 = names(data[,symbolism.22.col_idx]),
+                                 Affect.Sharing = names(data[,affect.sharing.col_idx]),
+                                 Social.Eng = names(data[,social.eng.col_idx]))
+  
+  pseudo <- data.frame(Imitation = pseudo_Imitation,
+                       Symbolism.11 = pseudo_Symbolism.11,
+                       Symbolism.12 = pseudo_Symbolism.12,
+                       Symbolism.21 = pseudo_Symbolism.21,
+                       Symbolism.22 = pseudo_Symbolism.22,
+                       Affect.Sharing = pseudo_Affect.Sharing,
+                       Social.Eng = pseudo_Social.Eng)
+  
+  # betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "R&P")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "R&P")
+  
+  print(i)
+  toc1 <- Sys.time()
+  print(toc1 - tic1)
 }
 toc <- Sys.time()
 print(toc - tic)
@@ -308,11 +312,14 @@ construct_items_list[["Affect.Sharing"]][2,] %in% construct_items_list[["Social.
 # saveRDS(nulls, "./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_3_27_25.rds")
 # saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_all_constraints_3_27_25.rds")
 # saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_all_constraints_3_27_25.rds")
+# 
+# saveRDS(nulls, "./code/Empirical_priors/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_no_constraints_4_28_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_no_constraints_4_28_25.rds")
 
-saveRDS(nulls, "./code/Empirical_priors/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P_pseudo_construct_items_no_constraints_4_28_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/R_and_P_pseudo_construct_reliabilities_no_constraints_4_28_25.rds")
-
+saveRDS(nulls, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_no_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_items_no_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliabilities_no_constraints_8_11_25.rds")
 
 
 nulls %>% group_by(combo) %>%

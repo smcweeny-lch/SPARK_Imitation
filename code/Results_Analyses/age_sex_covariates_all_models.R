@@ -14,10 +14,17 @@ data_reg <- read.csv("./data/individuals_registration.csv") %>%
 data2 <- left_join(data2, data_reg, by = c("ids" = "subject_sp_id"))
 rm(data_reg)
 
+set.seed(123)
+split <- sample(1:nrow(data2), size = nrow(data2)*.5,replace = F)
+
+train <- data2[split,]
+test <- data2[-split,]
+
 
 symbolism_syntax11 <- 'Symbolism11=~Imag.Play+VL1.F1+NVC.F1'
-symbolism11.cfa <- lavaan::cfa(symbolism_syntax11, data = data2, meanstructure = T, std.lv = T)
+symbolism11.cfa <- lavaan::cfa(symbolism_syntax11, data = train, meanstructure = T, std.lv = T)
 data2$Symbolism11 <- lavPredict(symbolism11.cfa, data2)
+data2$Symbolism11 <- scale(data2$Symbolism11)
 
 
 data2_male <- data2 %>% filter(sex == "Male")
@@ -33,7 +40,7 @@ ME.2011.syntax <- 'Motor.Skills ~ b1*Imitation
                   
                   b1_adj := b1 - 0.093       
                   b2_adj := b2 - 0.307       
-                  phi_adj := phi - 0.199       
+                  phi_adj := phi - 0.213       
                   
 '
 
@@ -54,11 +61,11 @@ ME.mod.old <- sem(model = ME.2011.syntax,
                      data = data2_old)
 
 
-parameterEstimates(ME.mod.male)[1:3,]
-parameterEstimates(ME.mod.female)[1:3,]
+parameterEstimates(ME.mod.male, standardized = T)[1:3,]
+parameterEstimates(ME.mod.female, standardized = T)[1:3,]
 
-parameterEstimates(ME.mod.young)[1:3,]
-parameterEstimates(ME.mod.old)[1:3,]
+parameterEstimates(ME.mod.young, standardized = T)[1:3,]
+parameterEstimates(ME.mod.old, standardized = T)[1:3,]
 
 cor(data2_young$Motor.Skills, data2_young$Social.Skills)
 cor(data2_old$Motor.Skills, data2_old$Social.Skills)
@@ -66,6 +73,10 @@ cor(data2_old$Motor.Skills, data2_old$Social.Skills)
 cor(data2_male$Motor.Skills, data2_male$Social.Skills)
 cor(data2_female$Motor.Skills, data2_female$Social.Skills)
 
+saveRDS(ME.mod.male, "./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_male.rds")
+saveRDS(ME.mod.female, "./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_female.rds")
+saveRDS(ME.mod.young, "./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_young.rds")
+saveRDS(ME.mod.old, "./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_old.rds")
 
 
 ########
@@ -77,12 +88,12 @@ VL2.F1 ~ b4*Imitation + b6*Self.Nonself + b8*Perceptual.Inconstancy
 
 b1_adj := b1 - .407
 b2_adj := b2 - .348
-b3_adj := b3 - .105
-b4_adj := b4 - .265
-b5_adj := b5 - .421
+b3_adj := b3 - .106
+b4_adj := b4 - .266
+b5_adj := b5 - .425
 b6_adj := b6 - .108
-b7_adj := b7 - .247
-b8_adj := b8 - .396
+b7_adj := b7 - .249
+b8_adj := b8 - .398
 '
 
 OR.mod.male <- sem(model = OR.1968.syntax, 
@@ -96,11 +107,19 @@ OR.mod.old <- sem(model = OR.1968.syntax,
                   data = data2_old)
 
 
-parameterEstimates(OR.mod.male)[1:8,]
-parameterEstimates(OR.mod.female)[1:8,]
+parameterEstimates(OR.mod.male, standardized = T)[1:8,]
+parameterEstimates(OR.mod.female, standardized = T)[1:8,]
 
-parameterEstimates(OR.mod.young)[1:8,]
-parameterEstimates(OR.mod.old)[1:8,]
+parameterEstimates(OR.mod.young, standardized = T)[1:8,]
+parameterEstimates(OR.mod.old, standardized = T)[1:8,]
+
+
+saveRDS(OR.mod.male, "./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_male.rds")
+saveRDS(OR.mod.female, "./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_female.rds")
+saveRDS(OR.mod.young, "./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_young.rds")
+saveRDS(OR.mod.old, "./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_old.rds")
+
+
 
 ###########
 
@@ -112,9 +131,13 @@ Symbolism11 ~ b2*Imitation
 
 b1_adj := b1 - .356
 b2_adj := b2 - .384
-b3_adj := b3 - .567
-b4_adj := b4 - .249
+b3_adj := b3 - .617
+b4_adj := b4 - .267
 '
+
+RP.mod <- sem(model = RP.1991.syntax, 
+              data = data2 )
+summary(RP.mod, standardized = T)
 
 RP.mod.male <- sem(model = RP.1991.syntax, 
                    data = data2_male)
@@ -127,8 +150,15 @@ RP.mod.old <- sem(model = RP.1991.syntax,
                   data = data2_old)
 
 
-parameterEstimates(RP.mod.male)[c(3,4,1,2),]
-parameterEstimates(RP.mod.female)[c(3,4,1,2),]
+parameterEstimates(RP.mod.male, standardized = T)[c(3,2,4,1),]
+parameterEstimates(RP.mod.female, standardized = T)[c(3,2,4,1),]
 
-parameterEstimates(RP.mod.young)[c(3,4,1,2),]
-parameterEstimates(RP.mod.old)[c(3,4,1,2),]
+parameterEstimates(RP.mod.young, standardized = T)[c(3,2,4,1),]
+parameterEstimates(RP.mod.old, standardized = T)[c(3,2,4,1),]
+
+
+saveRDS(RP.mod.male, "./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_male.rds")
+saveRDS(RP.mod.female, "./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_female.rds")
+saveRDS(RP.mod.young, "./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_young.rds")
+saveRDS(RP.mod.old, "./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_old.rds")
+

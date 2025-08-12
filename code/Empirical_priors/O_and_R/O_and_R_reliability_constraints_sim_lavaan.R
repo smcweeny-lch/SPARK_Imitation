@@ -14,7 +14,9 @@ rm(list = ls())
 library(tidyverse)
 library(psych)
 
-source("./code/Empirical_priors/sim_betas_lavaan.R")
+# source("./code/Empirical_priors/sim_betas_lavaan.R")
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
+
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 items_list[["Symbolism"]] <- c(items_list[["VL1.F1"]], items_list[["NVC.F1"]], items_list[["Imag.Play"]])
@@ -128,7 +130,7 @@ pseudo_items_list <- list()
 relis_list <- list()
 set.seed(123)
 tic <- Sys.time()
-for(i in 207:niter){
+for(i in 1:niter){
   relis_list[[i]] <- list()
   tic1 <- Sys.time()
   
@@ -300,7 +302,8 @@ for(i in 207:niter){
                        RC.F2 = pseudo_RC.F2,
                        VL2.F2 = pseudo_VL2.F2)
   
-  betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "O&R")
+  # betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "O&R")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "O&R")
   print(i)
   toc1 <- Sys.time()
   print(toc1-tic1)
@@ -380,6 +383,10 @@ construct_items_list[["Self.Nonself"]][1,] %in% construct_items_list[["RC.F1"]][
 
 
 
-saveRDS(nulls, "./code/Empirical_priors/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R_pseudo_construct_items_reliability_constraints_4_28_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/O_and_R_pseudo_construct_reliabilities_reliability_constraints_4_28_25.rds")
+# saveRDS(nulls, "./code/Empirical_priors/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R_pseudo_construct_items_reliability_constraints_4_28_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/O_and_R_pseudo_construct_reliabilities_reliability_constraints_4_28_25.rds")
+
+saveRDS(nulls, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliability_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_items_reliability_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliabilities_reliability_constraints_8_11_25.rds")

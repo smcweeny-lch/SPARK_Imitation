@@ -4,6 +4,8 @@ library(tidyverse)
 library(psych)
 
 source("./code/Empirical_priors/sim_betas_lavaan.R")
+source("./code/Empirical_priors/sim_betas_lavaan_std_all.R")
+
 
 items_list <- readRDS("./data/items_list_constructs.rds")
 
@@ -98,7 +100,9 @@ for(i in 1:niter){
                        Motor.Skills = as.vector(real_MotorSkills),
                        Social.Skills = real_SocialSkills)
   
-  betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "M&E")
+  # betas_list[[i]] <- sim_betas_lavaan(pseudo, theories = "M&E")
+  betas_list[[i]] <- sim_betas_lavaan_std_all(pseudo, theories = "M&E")
+  
   print(i)
 }
 
@@ -179,9 +183,15 @@ construct_items_list[["Imitation"]][2,]
 
 length(betas_list)
 
-saveRDS(nulls, "./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
-saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E_pseudo_MotSoc_items_all_constraints_5_8_25.rds")
-saveRDS(relis_df, "./code/Empirical_priors/M_and_E_pseudo_MotSoc_construct_reliabilities_all_constraints_5_8_25.rds")
+# saveRDS(nulls, "./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
+# saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E_pseudo_MotSoc_items_all_constraints_5_8_25.rds")
+# saveRDS(relis_df, "./code/Empirical_priors/M_and_E_pseudo_MotSoc_construct_reliabilities_all_constraints_5_8_25.rds")
+
+saveRDS(nulls, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudoImi_realMotSoc_all_constraints_8_11_25.rds")
+saveRDS(pseudo_items_list, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudoImi_realMotSoc_items_all_constraints_8_11_25.rds")
+saveRDS(relis_df, "./code/Empirical_priors/M_and_E/output/M_and_E_pseudoImi_realMotSoc_construct_reliabilities_all_constraints_8_11_25.rds")
+
+
 
 nulls %>% group_by(combo) %>%
   summarize(#mean_beta = mean(correlation_value),

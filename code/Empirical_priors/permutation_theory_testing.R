@@ -1,32 +1,66 @@
 rm(list = ls())
 library(tidyverse)
 #nulls <- readRDS("./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_3_27_25.rds")
-nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
-
-nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
-nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliability_constraints_4_28_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_4_22_25.rds")
+# 
+# nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_no_constraints_4_28_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliability_constraints_4_28_25.rds")
 
 #nulls <- readRDS("./code/Empirical_priors/R_and_P_pseudo_construct_all_constraints_4_10_25.rds")
+
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_all_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_no_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/R_and_P/output/R_and_P_pseudo_construct_reliability_constraints_8_11_25.rds")
+
 
 
 summary_table <- nulls %>% group_by(combo) %>% 
   filter(Fs == 11) %>%
-  summarize(median_beta = round(median(correlation_value),2),
-            sd_beta = round(sd(correlation_value),2))
+  summarize(median_beta = round(median(correlation_value),3),
+            sd_beta = round(sd(correlation_value),3))
 
 summary_table
 
-real_b_imi_aff <- .433 # Imi -> Affect.Sharing
-real_b_imi_sym <- .397 # Imi -> Symbolism
-real_b_aff_soc <- .467 # Aff -> Social.Eng
-real_b_imi_soc <- .306 # Imi -> Social.Eng
+RP.mod <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod.rds")
 
-# data2_female
-# real_b_imi_aff <- .438 # Imi -> Affect.Sharing
-# real_b_imi_sym <- .397 # Imi -> Symbolism
-# real_b_aff_soc <- 0.434   # Aff -> Social.Eng
-# real_b_imi_soc <- .312 # Imi -> Social.Eng
+RP.mod.young <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_young.rds")
+RP.mod.old <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_old.rds")
+RP.mod.male <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_male.rds")
+RP.mod.female <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_female.rds")
 
+
+
+# Imi -> Affect.Sharing
+real_b_imi_aff <- parameterestimates(RP.mod, standardized = T)$std.all[parameterestimates(RP.mod, standardized = T)$label == "b1"] 
+real_b_imi_sym <- parameterestimates(RP.mod, standardized = T)$std.all[parameterestimates(RP.mod, standardized = T)$label == "b2"]
+real_b_aff_soc <- parameterestimates(RP.mod, standardized = T)$std.all[parameterestimates(RP.mod, standardized = T)$label == "b3"] # Aff -> Social.Eng
+real_b_imi_soc <- parameterestimates(RP.mod, standardized = T)$std.all[parameterestimates(RP.mod, standardized = T)$label == "b4"] # Imi -> Social.Eng
+
+# young
+# real_b_imi_aff <- parameterestimates(RP.mod.young, standardized = T)$std.all[parameterestimates(RP.mod.young, standardized = T)$label == "b1"] 
+# real_b_imi_sym <- parameterestimates(RP.mod.young, standardized = T)$std.all[parameterestimates(RP.mod.young, standardized = T)$label == "b2"]
+# real_b_aff_soc <- parameterestimates(RP.mod.young, standardized = T)$std.all[parameterestimates(RP.mod.young, standardized = T)$label == "b3"] # Aff -> Social.Eng
+# real_b_imi_soc <- parameterestimates(RP.mod.young, standardized = T)$std.all[parameterestimates(RP.mod.young, standardized = T)$label == "b4"] # Imi -> Social.Eng
+
+#old 
+# real_b_imi_aff <- parameterestimates(RP.mod.old, standardized = T)$std.all[parameterestimates(RP.mod.old, standardized = T)$label == "b1"]
+# real_b_imi_sym <- parameterestimates(RP.mod.old, standardized = T)$std.all[parameterestimates(RP.mod.old, standardized = T)$label == "b2"]
+# real_b_aff_soc <- parameterestimates(RP.mod.old, standardized = T)$std.all[parameterestimates(RP.mod.old, standardized = T)$label == "b3"] # Aff -> Social.Eng
+# real_b_imi_soc <- parameterestimates(RP.mod.old, standardized = T)$std.all[parameterestimates(RP.mod.old, standardized = T)$label == "b4"] # Imi -> Social.Eng
+
+
+
+# female
+# real_b_imi_aff <- parameterestimates(RP.mod.female, standardized = T)$std.all[parameterestimates(RP.mod.female, standardized = T)$label == "b1"]
+# real_b_imi_sym <- parameterestimates(RP.mod.female, standardized = T)$std.all[parameterestimates(RP.mod.female, standardized = T)$label == "b2"]
+# real_b_aff_soc <- parameterestimates(RP.mod.female, standardized = T)$std.all[parameterestimates(RP.mod.female, standardized = T)$label == "b3"] # Aff -> Social.Eng
+# real_b_imi_soc <- parameterestimates(RP.mod.female, standardized = T)$std.all[parameterestimates(RP.mod.female, standardized = T)$label == "b4"] # Imi -> Social.Eng
+
+# male
+# real_b_imi_aff <- parameterestimates(RP.mod.male, standardized = T)$std.all[parameterestimates(RP.mod.male, standardized = T)$label == "b1"]
+# real_b_imi_sym <- parameterestimates(RP.mod.male, standardized = T)$std.all[parameterestimates(RP.mod.male, standardized = T)$label == "b2"]
+# real_b_aff_soc <- parameterestimates(RP.mod.male, standardized = T)$std.all[parameterestimates(RP.mod.male, standardized = T)$label == "b3"] # Aff -> Social.Eng
+# real_b_imi_soc <- parameterestimates(RP.mod.male, standardized = T)$std.all[parameterestimates(RP.mod.male, standardized = T)$label == "b4"] # Imi -> Social.Eng
 
 
 
@@ -37,19 +71,54 @@ mean((nulls %>% filter(combo == "Imitation*Social.Eng" & Fs == "11"))$correlatio
 
 
 
-
-mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12)$est[parameterestimates(RP.mod.12)$label == "b1"])
-mean((nulls %>% filter(combo == "Imitation*Symbolism.12" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12)$est[parameterestimates(RP.mod.12)$label == "b2"])
-mean((nulls %>% filter(combo == "Social.Eng*Affect.Sharing" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12)$est[parameterestimates(RP.mod.12)$label == "b3"])
-mean((nulls %>% filter(combo == "Imitation*Social.Eng" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12)$est[parameterestimates(RP.mod.12)$label == "b4"])
-
+#read in RP models from RogersPennington_Testing.R
+RP.mod.12 <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_12.rds")
+RP.mod.21 <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_21.rds")
+RP.mod.22 <- readRDS("./code/Results_Analyses/lavaan_models/R_and_P/RP_mod_22.rds")
 
 
-mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21)$est[parameterestimates(RP.mod.21)$label == "b1"])
-mean((nulls %>% filter(combo == "Imitation*Symbolism.21" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21)$est[parameterestimates(RP.mod.21)$label == "b2"])
-mean((nulls %>% filter(combo == "Social.Eng*Affect.Sharing" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21)$est[parameterestimates(RP.mod.21)$label == "b3"])
-mean((nulls %>% filter(combo == "Imitation*Social.Eng" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21)$est[parameterestimates(RP.mod.21)$label == "b4"])
+parameterestimates(RP.mod.12, standardized = T) %>% select(lhs, rhs, std.all)
 
+summary_table <- nulls %>% group_by(combo) %>% 
+  filter(Fs == 12) %>%
+  summarize(median_beta = round(median(correlation_value),3),
+            sd_beta = round(sd(correlation_value),3))
+
+summary_table
+
+
+
+mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12, standardized = T)$std.all[parameterestimates(RP.mod.12)$label == "b1"])
+mean((nulls %>% filter(combo == "Imitation*Symbolism.12" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12, standardized = T)$std.all[parameterestimates(RP.mod.12)$label == "b2"])
+mean((nulls %>% filter(combo == "Social.Eng*Affect.Sharing" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12, standardized = T)$std.all[parameterestimates(RP.mod.12)$label == "b3"])
+mean((nulls %>% filter(combo == "Imitation*Social.Eng" & Fs == "12"))$correlation_value > parameterestimates(RP.mod.12, standardized = T)$std.all[parameterestimates(RP.mod.12)$label == "b4"])
+
+
+parameterestimates(RP.mod.21, standardized = T) %>% select(lhs, rhs, std.all)
+
+summary_table <- nulls %>% group_by(combo) %>% 
+  filter(Fs == 21) %>%
+  summarize(median_beta = round(median(correlation_value),3),
+            sd_beta = round(sd(correlation_value),3))
+
+summary_table
+
+
+
+mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21, standardized = T)$std.all[parameterestimates(RP.mod.21)$label == "b1"])
+mean((nulls %>% filter(combo == "Imitation*Symbolism.21" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21, standardized = T)$std.all[parameterestimates(RP.mod.21)$label == "b2"])
+mean((nulls %>% filter(combo == "Social.Eng*Affect.Sharing" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21, standardized = T)$std.all[parameterestimates(RP.mod.21)$label == "b3"])
+mean((nulls %>% filter(combo == "Imitation*Social.Eng" & Fs == "21"))$correlation_value > parameterestimates(RP.mod.21, standardized = T)$std.all[parameterestimates(RP.mod.21)$label == "b4"])
+
+## 
+parameterestimates(RP.mod.22, standardized = T) %>% select(lhs, rhs, std.all)
+
+summary_table <- nulls %>% group_by(combo) %>% 
+  filter(Fs == 22) %>%
+  summarize(median_beta = round(median(correlation_value),3),
+            sd_beta = round(sd(correlation_value),3))
+
+summary_table
 
 
 mean((nulls %>% filter(combo == "Imitation*Affect.Sharing" & Fs == "22"))$correlation_value > parameterestimates(RP.mod.22)$est[parameterestimates(RP.mod.22)$label == "b1"])
@@ -128,7 +197,7 @@ title.grob <- grid::textGrob("Rogers & Pennington: Permutation Testing versus Fu
 plot_grid <- grid.arrange(nrow = 2, ncol = 2, grobs = list(gg1, gg2, gg3, gg4))
 
 scale <- 10
-png("./Manuscript/Supplemental Materials/R_P_Permutation_Plot.png", width = 1080*scale, height = 720*scale, res = 72*scale)
+png(paste0("./Manuscript/Supplemental Materials/R_P_Permutation_Plot_", Sys.Date(),".png"), width = 1080*scale, height = 720*scale, res = 72*scale)
 grid.arrange(
   arrangeGrob(
     title.grob
@@ -155,9 +224,15 @@ dev.off()
 
 
 # nulls <- readRDS("./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_3_24_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
-nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_no_constraints_4_28_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_4_21_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliability_constraints_4_28_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_no_constraints_4_28_25.rds")
+
+# nulls <- readRDS("./code/Empirical_priors/O_and_R_pseudo_construct_all_constraints_3_24_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_all_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_reliability_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/O_and_R/output/O_and_R_pseudo_construct_no_constraints_8_11_25.rds")
+
 
 summary_table <- nulls %>% group_by(combo) %>%
   filter(Fs == 11) %>%
@@ -169,47 +244,65 @@ summary_table$b <- c(2, 3, 4, 7, 1, 5, 6, 8)
 summary_table %>% arrange(b)
 
 
-b_self_perc <- .310
-b_imi_perc <- .107
-b_imi_RC <- .413
-b_imi_VL <- .037 
-b_self_RC <- .389
-b_self_VL <- .333
-b_RC_perc <- .132
-b_VL_perc <- .153
+OR.mod <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod.rds")
+
+b_self_perc <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b1"] 
+b_imi_perc <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b2"] 
+b_imi_RC <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b3"] 
+b_imi_VL <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b4"] 
+b_self_RC <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b5"] 
+b_self_VL <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b6"] 
+b_RC_perc <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b7"] 
+b_VL_perc <- parameterestimates(OR.mod, standardized = T)$std.all[parameterestimates(OR.mod, standardized = T)$label == "b8"] 
+
+
+OR.mod.young <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_young.rds")
+OR.mod.old <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_old.rds")
+OR.mod.male <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_male.rds")
+OR.mod.female <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_female.rds")
 
 
 # data2_younger
-# b_self_perc <- .23
-# b_imi_perc <- .17
-# b_imi_RC <- .37
-# b_imi_VL <- .10
-# b_self_RC <- .39
-# b_self_VL <- .26
-# b_RC_perc <- .17
-# b_VL_perc <- .14
-
-# data2_younger
-# b_self_perc <- .37
-# b_imi_perc <- .09
-# b_imi_RC <- .38
-# b_imi_VL <- .10
-# b_self_RC <- .42
-# b_self_VL <- .33
-# b_RC_perc <- .12
-# b_VL_perc <- .11
+# b_self_perc <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b1"] 
+# b_imi_perc <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b2"] 
+# b_imi_RC <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b3"] 
+# b_imi_VL <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b4"] 
+# b_self_RC <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b5"] 
+# b_self_VL <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b6"] 
+# b_RC_perc <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b7"] 
+# b_VL_perc <- parameterestimates(OR.mod.young, standardized = T)$std.all[parameterestimates(OR.mod.young, standardized = T)$label == "b8"] 
 
 
+# data2_old
+# b_self_perc <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b1"]
+# b_imi_perc <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b2"]
+# b_imi_RC <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b3"]
+# b_imi_VL <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b4"]
+# b_self_RC <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b5"]
+# b_self_VL <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b6"]
+# b_RC_perc <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b7"]
+# b_VL_perc <- parameterestimates(OR.mod.old, standardized = T)$std.all[parameterestimates(OR.mod.old, standardized = T)$label == "b8"]
 
 
-# b_self_perc <- .310
-# b_imi_perc <- .107
-# b_imi_RC <- .413
-# b_self_RC <- .389
-# b_RC_perc <- .132
-# b_imi_VL <- .037 
-# b_self_VL <- .333
-# b_VL_perc <- .153
+# male
+# b_self_perc <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b1"]
+# b_imi_perc <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b2"]
+# b_imi_RC <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b3"]
+# b_imi_VL <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b4"]
+# b_self_RC <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b5"]
+# b_self_VL <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b6"]
+# b_RC_perc <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b7"]
+# b_VL_perc <- parameterestimates(OR.mod.male, standardized = T)$std.all[parameterestimates(OR.mod.male, standardized = T)$label == "b8"]
+
+# female
+# b_self_perc <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b1"]
+# b_imi_perc <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b2"]
+# b_imi_RC <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b3"]
+# b_imi_VL <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b4"]
+# b_self_RC <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b5"]
+# b_self_VL <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b6"]
+# b_RC_perc <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b7"]
+# b_VL_perc <- parameterestimates(OR.mod.female, standardized = T)$std.all[parameterestimates(OR.mod.female, standardized = T)$label == "b8"]
 
 
 
@@ -240,6 +333,13 @@ summary_table %>% arrange(b)
 
 
 
+OR.mod.12 <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_12.rds")
+OR.mod.21 <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_21.rds")
+OR.mod.22 <- readRDS("./code/Results_Analyses/lavaan_models/O_and_R/OR_mod_22.rds")
+
+parameterestimates(OR.mod.12, standardized = T) %>% select(lhs, rhs, std.all)
+
+
 mean((nulls %>% filter(combo == "Self.Nonself*Perceptual.Inconstancy" & Fs == "12"))$correlation_value > parameterestimates(OR.mod.12)$est[parameterestimates(OR.mod.12)$label == "b1"])
 mean((nulls %>% filter(combo == "Imitation*Perceptual.Inconstancy"& Fs == "12"))$correlation_value > parameterestimates(OR.mod.12)$est[parameterestimates(OR.mod.12)$label == "b2"])
 
@@ -263,6 +363,7 @@ summary_table <- nulls %>% group_by(combo) %>%
 summary_table$b <- c(2, 3, 4, 7, 1, 5, 6, 8) 
 summary_table %>% arrange(b)
 
+parameterestimates(OR.mod.21, standardized = T) %>% select(lhs, rhs, std.all)
 
 
 mean((nulls %>% filter(combo == "Self.Nonself*Perceptual.Inconstancy" & Fs == "21"))$correlation_value > parameterestimates(OR.mod.21)$est[parameterestimates(OR.mod.21)$label == "b1"])
@@ -290,6 +391,7 @@ summary_table <- nulls %>% group_by(combo) %>%
 summary_table$b <- c(2, 3, 4, 7, 1, 5, 6, 8) 
 summary_table %>% arrange(b)
 
+parameterestimates(OR.mod.22, standardized = T) %>% select(lhs, rhs, std.all)
 
 mean((nulls %>% filter(combo == "Self.Nonself*Perceptual.Inconstancy" & Fs == "22"))$correlation_value > parameterestimates(OR.mod.22)$est[parameterestimates(OR.mod.22)$label == "b1"])
 mean((nulls %>% filter(combo == "Imitation*Perceptual.Inconstancy"& Fs == "22"))$correlation_value > parameterestimates(OR.mod.22)$est[parameterestimates(OR.mod.22)$label == "b2"])
@@ -355,7 +457,7 @@ title.grob <- grid::textGrob("Ornitz & Ritvo: Permutation Testing versus Fully C
 plot_grid <- grid.arrange(nrow = 2, ncol = 4, grobs = list(gg1, gg2, gg3, gg4, gg5, gg6, gg7, gg8))
 
 scale <- 10
-png("./Manuscript/Supplemental Materials/O_R_Permutation_Plot.png", width = 1080*scale, height = 720*scale, res = 72*scale)
+png(paste0("./Manuscript/Supplemental Materials/O_R_Permutation_Plot_", Sys.Date() ,".png"), width = 1080*scale, height = 720*scale, res = 72*scale)
 grid.arrange(
   arrangeGrob(
     title.grob
@@ -383,12 +485,21 @@ dev.off()
 
 
 #nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudo_construct_all_constraints_3_27_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_reliability_constraints_4_21_25.rds")
-nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
-#nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_4_7_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_full_constraints_4_21_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_reliability_constraints_4_21_25.rds")
+# nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_no_constraints_4_18_25.rds")
+# #nulls <- readRDS("./code/Empirical_priors/M_and_E_pseudoImi_realMotSoc_all_constraints_4_7_25.rds")
+# 
+# nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
 
-nulls <- readRDS("./code/Empirical_priors/output/M_and_E_pseudoImi_realMotSoc_all_constraints_5_8_25.rds")
+
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_full_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_reliability_constraints_8_11_25.rds")
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudo_construct_no_constraints_8_11_25.rds")
+
+nulls <- readRDS("./code/Empirical_priors/M_and_E/output/M_and_E_pseudoImi_realMotSoc_all_constraints_8_11_25.rds")
+
+
 
 
 summary_table <- nulls %>% group_by(combo) %>%
@@ -398,30 +509,57 @@ summary_table <- nulls %>% group_by(combo) %>%
 
 summary_table
 
+ME.mod <- readRDS("./code/Results_Analyses/lavaan_models/M_and_E/ME_mod.rds")
 
-b_imi_motor <- .264
-b_imi_social <- .533
-phi_mot_soc <- .213
-r_mot_soc <- .354
-
-
-b_imi_motor <- 0.282 
-b_imi_social <- 0.525 
-phi_mot_soc <- 0.217 
-r_mot_soc <- .35
+ME.mod.young <- readRDS("./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_young.rds")
+ME.mod.old <- readRDS("./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_old.rds")
+ME.mod.male <- readRDS("./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_male.rds")
+ME.mod.female <- readRDS("./code/Results_Analyses/lavaan_models/M_and_E/ME_mod_female.rds")
 
 
+parameterEstimates(ME.mod, standardized = T)
 
+b_imi_motor <- parameterestimates(ME.mod, standardized = T)$std.all[parameterestimates(ME.mod, standardized = T)$label == "b1"]
+b_imi_social <- parameterestimates(ME.mod, standardized = T)$std.all[parameterestimates(ME.mod, standardized = T)$label == "b2"]
+phi_mot_soc <- parameterestimates(ME.mod, standardized = T)$std.all[parameterestimates(ME.mod, standardized = T)$label == "phi"]
+r_mot_soc <- .354 # cor(data2$Social.Skills, data2$Motor.Skills)
+
+# pseudo Imi
+b_imi_motor - .191 
+b_imi_social - .217
+phi_mot_soc - .326
+r_mot_soc - .354
+
+
+# young
+# b_imi_motor <- parameterestimates(ME.mod.young, standardized = T)$std.all[parameterestimates(ME.mod.young, standardized = T)$label == "b1"]
+# b_imi_social <- parameterestimates(ME.mod.young, standardized = T)$std.all[parameterestimates(ME.mod.young, standardized = T)$label == "b2"]
+# phi_mot_soc <- parameterestimates(ME.mod.young, standardized = T)$std.all[parameterestimates(ME.mod.young, standardized = T)$label == "phi"]
+
+# old
+# b_imi_motor <- parameterestimates(ME.mod.old, standardized = T)$std.all[parameterestimates(ME.mod.old, standardized = T)$label == "b1"]
+# b_imi_social <- parameterestimates(ME.mod.old, standardized = T)$std.all[parameterestimates(ME.mod.old, standardized = T)$label == "b2"]
+# phi_mot_soc <- parameterestimates(ME.mod.old, standardized = T)$std.all[parameterestimates(ME.mod.old, standardized = T)$label == "phi"]
+
+# male
+# b_imi_motor <- parameterestimates(ME.mod.male, standardized = T)$std.all[parameterestimates(ME.mod.male, standardized = T)$label == "b1"]
+# b_imi_social <- parameterestimates(ME.mod.male, standardized = T)$std.all[parameterestimates(ME.mod.male, standardized = T)$label == "b2"]
+# phi_mot_soc <- parameterestimates(ME.mod.male, standardized = T)$std.all[parameterestimates(ME.mod.male, standardized = T)$label == "phi"]
+
+# female
+# b_imi_motor <- parameterestimates(ME.mod.female, standardized = T)$std.all[parameterestimates(ME.mod.female, standardized = T)$label == "b1"]
+# b_imi_social <- parameterestimates(ME.mod.female, standardized = T)$std.all[parameterestimates(ME.mod.female, standardized = T)$label == "b2"]
+# phi_mot_soc <- parameterestimates(ME.mod.female, standardized = T)$std.all[parameterestimates(ME.mod.female, standardized = T)$label == "phi"]
+
+
+
+# proportion of nulls falling above the std.all estimate
 mean((nulls %>% filter(combo == "Motor.Skills*Imitation"))$correlation_value > b_imi_motor)
 mean((nulls %>% filter(combo == "Social.Skills*Imitation"))$correlation_value > b_imi_social)
 
 mean((nulls %>% filter(combo == "Social.Skills*Motor.Skills"))$correlation_value > phi_mot_soc)
 mean((nulls %>% filter(combo == "Social.Skills*Motor.Skills.raw"))$correlation_value > r_mot_soc)
 
-b_imi_motor - .191
-b_imi_social - .217 
-phi_mot_soc - .312
-r_mot_soc - .354
 
 ggplot(nulls, aes(x = correlation_value)) +
   geom_histogram() +
@@ -448,7 +586,7 @@ title.grob <- grid::textGrob("Mostofsky & Ewen: Permutation Testing versus Fully
 plot_grid <- grid.arrange(nrow = 2, ncol = 2, grobs = list(gg1, gg2, gg3, gg4))
 
 scale <- 10
-png("./Manuscript/Supplemental Materials/M_E_Permutation_Plot.png", width = 1080*scale, height = 720*scale, res = 72*scale)
+png(paste0("./Manuscript/Supplemental Materials/M_E_Permutation_Plot_",Sys.Date() ,".png"), width = 1080*scale, height = 720*scale, res = 72*scale)
 grid.arrange(
   arrangeGrob(
     title.grob
